@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <button onclick="add()">Add</button>
+    <button onclick="upd()" style="display: none;">Update</button>
+    <ul></ul>
+    <script>
+        let ipr=document.getElementsByTagName("input")[0]
+        let btnr=document.getElementsByTagName("button")
+        let ulr=document.getElementsByTagName("ul")[0]
+        let arr=[]
+        edind=-1
+        let disp=()=>{
+            let s=""
+            for(let i=0;i<arr.length;i++)
+        {
+            s=s+`<li>${arr[i]} <button onclick="edit(${i})">Edit</button> <button onclick="upd(${i})">Update</button></li>`
+
+        }
+        ulr.innerHTML=s
+        }
+        let add=()=>{
+            arr.push(ipr.value)
+            ipr.value=""
+            disp()
+        }
+        function del(ind)
+        {
+            a.splice(ind,1)
+            disp()
+        }
+        function edit(ind){
+            ipr.value=arr[ind]
+            btnr[0].style.display="none"
+            btnr[1].style.display="inline-block"
+            edind=ind
+        }
+        let upd=()=>{
+            arr[edind]=ipr.value
+            ipr.value=""
+            btnr[0].style.display="inline-block"
+            btnr[1].style.display="none"
+            disp()
+        }
+    </script>
+</body>
+</html>
