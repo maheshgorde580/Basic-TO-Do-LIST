@@ -1,53 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cool Todo List 😎</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #74b9ff, #a29bfe);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+    input {
+      width: 70%;
+      padding: 10px;
+      border: 2px solid #6c5ce7;
+      border-radius: 8px;
+      outline: none;
+    }
+    button {
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-left: 5px;
+    }
+    button:hover {
+      background: #341f97;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      text-align: left;
+    }
+    li {
+      background: #f1f2f6;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li span {
+      flex: 1;
+    }
+    li button {
+      background: #00b894;
+      margin-left: 5px;
+    }
+    li button:nth-child(3) {
+      background: #d63031;
+    }
+    li button:hover {
+      opacity: 0.8;
+    }
+  </style>
 </head>
 <body>
-    <input type="text">
+  <div class="container">
+    <h2>📝 Cool To-Do List</h2>
+    <input type="text" placeholder="Enter task..." />
     <button onclick="add()">Add</button>
-    <button onclick="upd()" style="display: none;">Update</button>
+    <button onclick="updateTask()" style="display: none;">Update</button>
     <ul></ul>
-    <script>
-        let ipr=document.getElementsByTagName("input")[0]
-        let btnr=document.getElementsByTagName("button")
-        let ulr=document.getElementsByTagName("ul")[0]
-        let arr=[]
-        edind=-1
-        let disp=()=>{
-            let s=""
-            for(let i=0;i<arr.length;i++)
-        {
-            s=s+`<li>${arr[i]} <button onclick="edit(${i})">Edit</button> <button onclick="upd(${i})">Update</button></li>`
+  </div>
 
-        }
-        ulr.innerHTML=s
-        }
-        let add=()=>{
-            arr.push(ipr.value)
-            ipr.value=""
-            disp()
-        }
-        function del(ind)
-        {
-            a.splice(ind,1)
-            disp()
-        }
-        function edit(ind){
-            ipr.value=arr[ind]
-            btnr[0].style.display="none"
-            btnr[1].style.display="inline-block"
-            edind=ind
-        }
-        let upd=()=>{
-            arr[edind]=ipr.value
-            ipr.value=""
-            btnr[0].style.display="inline-block"
-            btnr[1].style.display="none"
-            disp()
-        }
-    </script>
+  <script>
+    let ipr = document.querySelector("input");
+    let btnAdd = document.getElementsByTagName("button")[0];
+    let btnUpdate = document.getElementsByTagName("button")[1];
+    let ulr = document.querySelector("ul");
+    let arr = [];
+    let editIndex = -1;
+
+    const display = () => {
+      ulr.innerHTML = "";
+      arr.forEach((task, i) => {
+        ulr.innerHTML += `
+          <li>
+            <span>${task}</span>
+            <div>
+              <button onclick="edit(${i})">✏️ Edit</button>
+              <button onclick="del(${i})">🗑️ Delete</button>
+            </div>
+          </li>`;
+      });
+    };
+
+    const add = () => {
+      if (ipr.value.trim() === "") return;
+      arr.push(ipr.value.trim());
+      ipr.value = "";
+      display();
+    };
+
+    const del = (ind) => {
+      arr.splice(ind, 1);
+      display();
+    };
+
+    const edit = (ind) => {
+      ipr.value = arr[ind];
+      editIndex = ind;
+      btnAdd.style.display = "none";
+      btnUpdate.style.display = "inline-block";
+    };
+
+    const updateTask = () => {
+      if (editIndex !== -1 && ipr.value.trim() !== "") {
+        arr[editIndex] = ipr.value.trim();
+        ipr.value = "";
+        btnAdd.style.display = "inline-block";
+        btnUpdate.style.display = "none";
+        editIndex = -1;
+        display();
+      }
+    };
+  </script>
 </body>
 </html>
